@@ -13,10 +13,10 @@ function Header() {
                 </h1>
             </div>
             <div className="flex items-center justify-between gap-4">
-                <button onClick={toggle} className="p-2 rounded-full hover:bg-orange-400/60 transition-colors cursor-pointer" aria-label="Toggle theme">
+                <button onClick={toggle} className="p-2 rounded-full hover:bg-orange-400 transition-colors cursor-pointer" aria-label="Toggle theme">
                     {dark ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
-                <div className="border-l border-white/10 h-5" />
+                <div className="border-l border-border-light dark:border-white/10 h-5" />
                 <a>Sign In</a>
             </div>
         </header>
