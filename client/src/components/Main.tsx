@@ -1,57 +1,25 @@
-function Main () {
-    return (
-        <div className="w-full overflow-y-auto">
-            <div className="h-50 bg-red-600">
-            </div>
-            <section className="filterbar-wrapper">
+import type { MainProps } from '../types/props';
+import { useCards } from '../hooks/useCards';
+import CardItem from './Card';
 
-            </section>
+function Main({ selectedSet }: MainProps) {
+    const { visibleCards, loading, sentinelRef } = useCards(selectedSet);
+
+    return (
+        <div className="flex-1 min-w-0 overflow-y-auto custom-scrollbar">
+            <section className="w-full h-50 bg-yellow-700"></section>
+            <section className="filterbar-wrapper" />
             <section className="card-wrapper">
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
-                <img src="https://cards.scryfall.io/large/front/b/f/bf708169-a307-494b-b8d8-baae53b2e2f2.jpg?1767658678"
-                     alt="Card Name" className="card" />
+                {visibleCards.map((card) => (
+                    <CardItem key={card.id} card={card} />
+                ))}
             </section>
+            {loading && (
+                <p className="text-center py-10 opacity-50">Loading Cards...</p>
+            )}
+            <div ref={sentinelRef} className="h-1" />
         </div>
-    )
+    );
 }
 
 export default Main;
