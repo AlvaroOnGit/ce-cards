@@ -1,6 +1,8 @@
 import { ChevronUp, ChevronDown, Menu } from 'lucide-react';
 import type { Category } from "../types/sidebar.ts";
+import type { SidebarProps } from '../types/props';
 import { useSidebarCategories, useSidebarToggle } from "../hooks/useSidebar.ts";
+import categoryData from '../data/categories.json';
 
 const createSet = (code: string, name: string) => ({
     code,
@@ -8,97 +10,12 @@ const createSet = (code: string, name: string) => ({
     icon: `ss-${code}`
 });
 
-const CATEGORIES: Category[] = [
-    {
-        id: "mtg",
-        label: "Magic the Gathering",
-        expanded: true,
-        sets: [
-            createSet("sos", "Secrets of Strixhaven"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-            createSet("ecl", "Lorwyn Eclipsed"),
-        ]
-    },
-    {
-        id: "ub",
-        label: "Universes Beyond",
-        expanded: true,
-        sets: [
-            createSet("tmt", "Teenage Mutant Ninja Turtles"),
-            createSet("tla", "Avatar: The Last Airbender"),
-        ]
-    },
-    {
-        id: "cmm",
-        label: "Commander",
-        expanded: true,
-        sets: [
-            createSet("soc", "Secrets of Strixhaven Commander"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-            createSet("tmc", "Teenage Mutant Ninja Turtles Eternal"),
-        ]
-    },
-]
+const CATEGORIES: Category[] = categoryData.map(cat => ({
+    ...cat,
+    sets: cat.sets.map(s => createSet(s.code, s.name))
+}));
 
-function Sidebar() {
+function Sidebar({ onSetSelect, selectedSet }: SidebarProps) {
     const { isOpen, toggleSidebar } = useSidebarToggle(true);
     const { categories, toggleCategory } = useSidebarCategories(CATEGORIES);
 
@@ -123,8 +40,13 @@ function Sidebar() {
                                     {cat.sets.map((set) => (
                                         <span
                                             key={set.code}
-                                            className={`ss ${set.icon} ss-3x ss-fw ss-grad ss-mythic`}
+                                            className={`ss ${set.icon} ss-3x ss-fw ss-grad ss-mythic ${
+                                                selectedSet === set.code 
+                                                    ? 'opacity-100' 
+                                                    : 'opacity-50'
+                                            }`}
                                             title={set.name}
+                                            onClick={() => onSetSelect(set.code)}
                                         />
                                     ))}
                                 </div>
