@@ -1,4 +1,5 @@
 import { ChevronUp, ChevronDown, Menu } from 'lucide-react';
+import SetSearchBar from "./SetSearchBar";
 import type { Category } from "../types/sidebar.ts";
 import type { SidebarProps } from '../types/props';
 import { useSidebarCategories, useSidebarToggle } from "../hooks/useSidebar.ts";
@@ -21,7 +22,18 @@ function Sidebar({ onSetSelect, selectedSet }: SidebarProps) {
 
     return (
         <aside className="sticky z-20">
-            <div className={`sidebar-wrapper transition-all duration-500 ${isOpen ? 'w-60' : 'w-8'}`}>
+            <div className={`sidebar-wrapper transition-all duration-500 ${
+                isOpen 
+                    ? 'w-60' 
+                    : 'w-8'
+            }`}>
+                <div className={`transition-all ${
+                    isOpen
+                        ? 'opacity-100 duration-1000'
+                        : 'opacity-0 pointer-events-none'
+                }`}>
+                    <SetSearchBar categories={categories} onSetSelect={onSetSelect}/>
+                </div>
                 <nav className={`sidebar-category-wrapper transition-all ease-in ${
                     isOpen
                         ? 'opacity-100 duration-1000'

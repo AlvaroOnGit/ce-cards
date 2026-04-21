@@ -2,7 +2,9 @@
 
 @theme {
     --color-background-light: rgb(243, 244, 248);
+    --color-background-light-secondary: rgb(255, 235, 222);
     --color-background-dark: rgb(3 7 19);
+    --color-background-dark-secondary: rgb(43, 17, 7);
     --color-border-light: rgb(184, 184, 184);
     --font-ubuntu-mono: "Ubuntu Mono", monospace;
 }
@@ -87,9 +89,67 @@
         transition-colors
         cursor-pointer
     }
+    .sidebar-searchbar-wrapper {
+        @apply
+        relative
+        px-3
+        py-2
+        mt-5
+    }
+    .sidebar-searchbar {
+        @apply
+        flex
+        items-center
+        gap-2
+        border
+        rounded-md
+        px-2
+        py-1.5
+        border-border-light
+        dark:border-white/10
+        bg-background-light-secondary
+        dark:bg-background-dark-secondary
+    }
+    .sidebar-searchbar input {
+        @apply
+        bg-transparent
+        text-sm
+        outline-none
+        placeholder:opacity-80
+        focus:placeholder-transparent
+    }
+    .sidebar-searchbar-dropdown {
+        @apply
+        absolute
+        left-3
+        right-3
+        top-full
+        mt-1
+        z-50
+        rounded-md
+        border
+        border-border-light
+        dark:border-white/10
+        bg-background-light
+        dark:bg-background-dark
+        overflow-hidden
+        shadow-sm
+    }
+    .sidebar-searchbar-dropdown li {
+        @apply
+        flex
+        items-center
+        gap-3
+        px-3
+        py-2
+        text-sm
+        cursor-pointer
+        hover:bg-orange-400/20
+        transition-colors
+    }
     .sidebar-category-wrapper {
         @apply
-        mt-10
+        mt-2
         flex-1
         overflow-x-hidden
         overflow-y-auto
