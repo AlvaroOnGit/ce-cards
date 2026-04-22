@@ -71,6 +71,7 @@ function Sidebar({ onSetSelect, selectedSet }: SidebarProps) {
                 className="sidebar-toggle"
                 onClick={toggleSidebar}
                 aria-label="Toggle sidebar"
+                title="Toggle sidebar"
             >
                 <Menu size={18}/>
             </button>
