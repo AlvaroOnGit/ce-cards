@@ -247,6 +247,16 @@
         rounded-full
         cursor-pointer
     }
+    .scroll-top-button {
+        @apply
+        fixed
+        bottom-5
+        right-5
+        p-2
+        rounded-full
+        bg-orange-400
+        cursor-pointer
+    }
 }
 
 @keyframes shimmer {
