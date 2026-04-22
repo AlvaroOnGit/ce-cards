@@ -219,6 +219,22 @@
         w-80
         cursor-pointer
     }
+    .card-skeleton {
+        @apply
+        relative
+        w-full
+        h-100
+        rounded-xl
+        bg-gray-700/30
+        overflow-hidden
+    }
+    .card-skeleton-overlay {
+        @apply
+        absolute
+        inset-0
+        bg-linear-to-r from-transparent
+        via-white/10 to-transparent
+    }
     .card-flip {
         @apply
         absolute
@@ -231,4 +247,8 @@
         rounded-full
         cursor-pointer
     }
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(200%); }
 }
