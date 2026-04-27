@@ -26,7 +26,9 @@ function Main({ selectedSet }: MainProps) {
 
     return (
         <div ref={scrollRef} className="flex-1 min-w-0 overflow-y-auto custom-scrollbar">
-            <section className="w-full h-50 bg-yellow-700"></section>
+            <section className="w-full h-50">
+                <img src="/src/assets/desktop-banner.webp" alt="Desktop banner" className="w-full"></img>
+            </section>
             <CardFilterItem
                 onNameChange={setNameFilter}
                 value={nameFilter}
