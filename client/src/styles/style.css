@@ -96,28 +96,6 @@
         py-2
         mt-5
     }
-    .sidebar-searchbar {
-        @apply
-        flex
-        items-center
-        gap-2
-        border
-        rounded-md
-        px-2
-        py-1.5
-        border-border-light
-        dark:border-white/10
-        bg-background-light-secondary
-        dark:bg-background-dark-secondary
-    }
-    .sidebar-searchbar input {
-        @apply
-        bg-transparent
-        text-sm
-        outline-none
-        placeholder:opacity-80
-        focus:placeholder-transparent
-    }
     .sidebar-searchbar-dropdown {
         @apply
         absolute
@@ -193,9 +171,15 @@
     .filterbar-wrapper {
         @apply
         sticky
+        flex
+        items-center
         top-0
         h-15
         z-10
+        px-5
+        py-2
+        gap-2
+        justify-center
         border-b
         border-border-light
         dark:border-white/10
@@ -256,6 +240,32 @@
         rounded-full
         bg-orange-400
         cursor-pointer
+    }
+}
+
+@layer reusable-components {
+    .searchbar {
+        @apply
+        flex
+        items-center
+        gap-2
+        border
+        rounded-md
+        px-2
+        py-1.5
+        border-border-light
+        dark:border-white/10
+        bg-background-light-secondary
+        dark:bg-background-dark-secondary
+    }
+    .searchbar input{
+        @apply
+        w-full
+        bg-transparent
+        text-sm
+        outline-none
+        placeholder:opacity-80
+        focus:placeholder-transparent
     }
 }
 

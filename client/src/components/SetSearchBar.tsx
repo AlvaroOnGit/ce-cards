@@ -7,7 +7,7 @@ function SetSearchBar({ categories, onSetSelect }: SetSearchBarProps) {
 
     return (
         <div ref={containerRef} className="sidebar-searchbar-wrapper">
-            <div className="sidebar-searchbar">
+            <div className="searchbar">
                 <Search size={14} className="opacity-50 shrink-0" />
                 <input
                     type="text"

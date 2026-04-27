@@ -1,20 +1,37 @@
-import {useState, useEffect, useRef, useCallback} from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { getCardsBySet } from '../services/scryfall';
 import type { Card } from '../types/mtg';
 
 const PAGE_SIZE = 60;
 
-export function useCards(selectedSet: string) {
+export function useCards(selectedSet: string, nameFilter: string = '', selectedColors: string[] = []) {
     const [visibleCards, setVisibleCards] = useState<Card[]>([]);
     const [loading, setLoading] = useState(false);
     const allCards = useRef<Card[]>([]);
-    const fetchingRef = useRef(false);
     const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+    const getFiltered = useCallback(() => {
+        let cards = allCards.current;
+
+        if (nameFilter.trim()) {
+            cards = cards.filter(c =>
+                c.name.toLowerCase().includes(nameFilter.toLowerCase())
+            );
+        }
+
+        if (selectedColors.length > 0) {
+            cards = cards.filter(c =>
+                selectedColors.every(color => c.colors.includes(color)) &&
+                c.colors.every(color => selectedColors.includes(color))
+            );
+        }
+
+        return cards;
+    }, [nameFilter, selectedColors]);
 
     useEffect(() => {
         setVisibleCards([]);
         allCards.current = [];
-        fetchingRef.current = false;
 
         let cancelled = false;
 
@@ -32,7 +49,7 @@ export function useCards(selectedSet: string) {
                 allCards.current = [...allCards.current, ...result.cards];
 
                 if (firstBatch) {
-                    setVisibleCards(allCards.current.slice(0, PAGE_SIZE));
+                    setVisibleCards(getFiltered().slice(0, PAGE_SIZE));
                     setLoading(false);
                     firstBatch = false;
                 }
@@ -47,14 +64,19 @@ export function useCards(selectedSet: string) {
         return () => { cancelled = true; };
     }, [selectedSet]);
 
-    const hasMore = visibleCards.length < allCards.current.length;
+    useEffect(() => {
+        setVisibleCards(getFiltered().slice(0, PAGE_SIZE));
+    }, [nameFilter, selectedColors]);
+
+    const filtered = getFiltered();
+    const hasMore = visibleCards.length < filtered.length;
 
     const loadMore = useCallback(() => {
         setVisibleCards(prev => {
             const nextSize = prev.length + PAGE_SIZE;
-            return allCards.current.slice(0, nextSize);
+            return getFiltered().slice(0, nextSize);
         });
-    }, []);
+    }, [getFiltered]);
 
     useEffect(() => {
         if (!sentinelRef.current || loading || !hasMore) return;
