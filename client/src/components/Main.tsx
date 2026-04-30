@@ -5,6 +5,7 @@ import type { MainProps } from '../types/props';
 import CardItem from './Card';
 import CardFilterItem from './CardFilter';
 import { ArrowBigUpDash } from 'lucide-react';
+import banner from "../assets/desktop-banner.webp";
 
 function Main({ selectedSet }: MainProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -27,7 +28,7 @@ function Main({ selectedSet }: MainProps) {
     return (
         <div ref={scrollRef} className="flex-1 min-w-0 overflow-y-auto custom-scrollbar">
             <section className="w-full h-50">
-                <img src="/src/assets/desktop-banner.webp" alt="Desktop banner" className="w-full"></img>
+                <img src={banner} alt="Desktop banner" className="w-full" />
             </section>
             <CardFilterItem
                 onNameChange={setNameFilter}
